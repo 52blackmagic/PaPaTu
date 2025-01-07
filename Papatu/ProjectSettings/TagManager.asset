@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Ground
   - 
   - 
   - 
@@ -41,12 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: background
+  - name: Background
     uniqueID: 308058461
     locked: 0
-  - name: tube
+  - name: Tube
     uniqueID: 3944752851
     locked: 0
-  - name: mouse
+  - name: Mouse
     uniqueID: 1380974173
     locked: 0

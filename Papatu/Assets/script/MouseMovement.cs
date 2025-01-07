@@ -4,36 +4,52 @@ using UnityEngine;
 
 public class MouseMovement : MonoBehaviour
 {
-     // 控制角色移动的速度
-    public float moveSpeed = 5f;
-    public Rigidbody2D rb;
-    public float jumpForce = 6f;
-    public int jumpCount = 2; // 二段跳次数
-    public LayerMask groundLayer; // 地面图层
-    private bool isGrounded = true; // 是否在地面
+   public float moveSpeed;
+   public float jumpForce;
+   private float moveInput;
 
-    // Update是每帧调用一次
-    void Update()
-    {
-        // 获取水平和垂直方向的输入
-        float horizontal = Input.GetAxis("Horizontal"); // A/D 或 左/右箭头
-        float vertical = Input.GetAxis("Vertical");     // W/S 或 上/下箭头
+   private Rigidbody2D rb;
 
-        // 根据输入计算移动向量
-        Vector3 moveDirection = new Vector3(horizontal, 0, vertical);
+   private bool facingRight = true;
 
-        // 移动角色
-        transform.Translate(moveDirection * moveSpeed * Time.deltaTime);  
-        
-        if (Input.GetButtonDown("Jump") && isGrounded && jumpCount > 0)
-        {
-            isGrounded = false;
-            rb.AddForce(new Vector2(0, jumpForce));
-            jumpCount--;
-        }
-    }
-    void FixedUpdate()
-    {
-        isGrounded = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y - 0.1f), 0.1f, groundLayer);
-    }
+   private bool isGrounded;
+   public Transform groundCheck;
+   public float checkRadius;
+   public LayerMask whatIsGround;
+
+
+   void Start()
+   {
+      rb=GetComponent<Rigidbody2D>();
+   }
+
+   void Update()
+   {
+      isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+      
+      moveInput = Input.GetAxis("Horizontal");
+      rb.velocity = new Vector2(moveInput*moveSpeed, rb.velocity.y);
+
+      if(facingRight == false && moveInput > 0)
+      {
+        Flip();
+      }
+      else if(facingRight == true && moveInput < 0)
+      {
+        Flip();
+      }
+
+      if(Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
+      {
+         rb.velocity = Vector2.up*jumpForce;
+      }
+   }
+
+   void Flip()
+   {
+      facingRight = !facingRight;
+      Vector3 Scaler = transform.localScale;
+      Scaler.x*=-1;
+      transform.localScale = Scaler;
+   }
 }
