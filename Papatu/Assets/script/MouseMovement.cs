@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngineInternal.XR.WSA;
 
 public class MouseMovement : MonoBehaviour
 {
@@ -28,7 +30,7 @@ public class MouseMovement : MonoBehaviour
       isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
       
       moveInput = Input.GetAxis("Horizontal");
-      rb.velocity = new Vector2(moveInput*moveSpeed, rb.velocity.y);
+      rb.velocity = new Vector2(moveInput * moveSpeed , rb.velocity.y);
 
       if(facingRight == false && moveInput > 0)
       {
