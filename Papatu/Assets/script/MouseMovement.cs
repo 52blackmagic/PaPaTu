@@ -41,7 +41,7 @@ public class MouseMovement : MonoBehaviour
         Flip();
       }
 
-      if(Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
+      if(Input.GetKeyDown(KeyCode.W) && isGrounded == true)
       {
          rb.velocity = Vector2.up*jumpForce;
       }
